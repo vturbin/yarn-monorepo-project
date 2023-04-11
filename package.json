@@ -1,0 +1,64 @@
+{
+  "name": "yarn-monorepo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "yarn workspaces run build",
+    "frontend:start-dev": "cd packages/frontend && yarn start",
+    "prettier": "prettier --write \"**/*+(.html|.ts)\"",
+    "prettier:check": "prettier --check \"**/*+(.html|.ts)\""
+  },
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/@angular/cli",
+      "**/@angular/cli/**"
+    ]
+  },
+  "devDependencies": {
+    "@angular-devkit/architect": "0.1502.3",
+    "@angular-devkit/build-angular": "15.2.3",
+    "@angular-devkit/core": "15.2.3",
+    "@bartholomej/ngx-translate-extract": "8.0.2",
+    "audit-ci": "6.6.1",
+    "commitizen": "4.3.0",
+    "cz-conventional-changelog": "3.3.0",
+    "husky": "8.0.3",
+    "postcss-gap-properties": "4.0.1",
+    "prettier": "2.8.7",
+    "sonarqube-scanner": "3.0.1",
+    "typescript": "4.8.4"
+},
+"resolutions": {
+    "**/**/yargs-parser": "^20.2.9",
+    "**/**/@types/node": "16.18.23",
+    "**/**/@types/bson": "4.0.5",
+    "**/**/mpath": "^0.9.0",
+    "**/**/colors": "1.4.0",
+    "**/**/@types/superagent": "4.1.16",
+    "**/**/express-handlebars": "7.0.4",
+    "**/**/multer": "1.4.4-lts.1",
+    "**/**/mongoose": "6.10.4",
+    "**/**/qs": "6.11.1",
+    "**/**/json5": ">=2.2.2",
+    "**/**/logform": "2.5.1"
+},
+"resolutionComments": {
+    "**/**/yargs-parser": "Update 2022-08-03: removing this still creates a moderate audit issue",
+    "**/**/@types/node": "This is needed because otherwise, @types/node is resolved to version 17+, with which we are not compatible. Update this when updating the node version!",
+    "**/**/@types/bson": "This is needed because mongodb has a wild card * for the bson dependency. This way we can fix the bson version.",
+    "**/**/mpath": "This is a dependency of mongoose, but the update of mongoose failed, due to other type definitions. Update 2022-08-03: removing this still resolves to a version < 0.9",
+    "**/**/colors": "There are some compromised versions of colors in the registry. Make sure to use a proper one.",
+    "**/**/@types/superagent": "There are issues importing 'Blob' from 'buffer' in 4.1.14 and 4.1.15.",
+    "**/**/express-handlebars": "To address import module issue: https://github.com/express-handlebars/express-handlebars/issues/519",
+    "**/**/multer": "Override to 1.4.4-lts.1 addresses vulnerability CVE-2022-24434.",
+    "**/**/mongoose": "audit issue in 5.13.14, see https://github.com/advisories/GHSA-f825-f98c-gj3g",
+    "**/**/qs": "audit issue in >=6.9.0 <6.9.7, superagent has no fix version yet, see https://github.com/advisories/GHSA-hrpp-h998-j3pp",
+    "**/**/json5": "audit issue, https://github.com/json5/json5/security/advisories/GHSA-9c47-m6qq-7p4h - installed through @angular/localize>@babel/core>json5",
+    "**/**/logform": "version 2.5.0 is missing some types, see https://github.com/winstonjs/logform/issues/242"
+}
+}

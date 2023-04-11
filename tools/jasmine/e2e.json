@@ -1,0 +1,9 @@
+{
+    "spec_dir": "dist",
+    "spec_files": [
+        "**/*.e2e-spec.js"
+    ],
+    "helpers": [
+        "../../../tools/jasmine/e2e_helper.js"
+    ]
+}
